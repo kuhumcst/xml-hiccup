@@ -1,5 +1,7 @@
 XML Hiccup
 ==========
+[![xml-hiccup](https://img.shields.io/clojars/v/dk.cst/xml-hiccup.svg)](https://clojars.org/dk.cst/xml-hiccup)
+
 Clojure(Script) implementation of an XML parser that, more or less directly,
 converts an XML file into Hiccup data without trying to be clever about it.
 
