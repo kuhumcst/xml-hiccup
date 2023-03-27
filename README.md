@@ -9,6 +9,19 @@ Comments and superfluous whitespace are deliberately not preserved, while
 namespaces are converted into regular Clojure namespaces. No attempt is made
 to map namespace URIs to namespace aliases.
 
+Usage
+-----
+This example shows how to parse a `File`, though it could also be a `String` or an `InputStream`. 
+
+```clojure
+(require '[dk.cst.xml-hiccup :as xh]
+         '[clojure.java.io :as io])
+
+(xh/parse (io/file "test/test-1307-anno-tei.xml"))
+```
+
+> NOTE: ClojureScript _only_ supports parsing XML strings!
+
 Why even use this?
 ------------------
-For various reasons, I needed a library that can turn XML into Hiccup in both my backend code and my frontend code. This library does that.
+For various reasons, I needed a library that can turn XML into _identical_ Hiccup in *both* my backend code _and_ my frontend code. This library does that.
