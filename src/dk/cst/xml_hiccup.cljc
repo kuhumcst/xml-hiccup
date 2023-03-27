@@ -79,7 +79,7 @@
   (keywordize #?(:clj  (.getNodeName node)
                  :cljs (.-tagName node))))
 
-(defn node-content
+(defn node-children
   "Get the children of the `node` as objects."
   [^Node node]
   #?(:clj  (let [node-list (.getChildNodes node)]
@@ -92,7 +92,7 @@
   [^Node node]
   {:tag     (node-tag node)
    :attrs   (node-attrs node)
-   :content (node-content node)})
+   :content (node-children node)})
 
 (defn whole-text
   [^Text node]
@@ -110,13 +110,14 @@
                  (.normalize)))
 
        ;; TODO: is the CLJS part relevant?
-       :cljs (map node->hiccup (node-content node)))
+       :cljs (map node->hiccup (node-children node)))
 
     Element
-    (let [{:keys [tag attrs content]} (node-data node)]
-      (->> (map node->hiccup content)
-           (remove nil?)
-           (into [tag attrs])))
+    (into [(node-tag node) (node-attrs node)]
+          (comp
+            (map node->hiccup)
+            (remove nil?))
+          (node-children node))
 
     ;; TODO: should probably escape HTML here
     Text
@@ -130,7 +131,7 @@
     :else node))
 
 (defn parse
-  "Parse `xml` as hiccup data."
+  "Convert `xml` into a tree of Hiccup data."
   [xml]
   (node->hiccup (dom-parse xml)))
 
