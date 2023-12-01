@@ -87,13 +87,6 @@
                (.item node-list n)))
      :cljs (.-childNodes node)))
 
-(defn node-data
-  "Return the data of a `node`. Mimics the return value of clojure.data.xml."
-  [^Node node]
-  {:tag     (node-tag node)
-   :attrs   (node-attrs node)
-   :content (node-children node)})
-
 (defn whole-text
   [^Text node]
   #?(:clj  (.getWholeText node)
@@ -136,5 +129,9 @@
   (node->hiccup (dom-parse xml)))
 
 (comment
-  (parse (clojure.java.io/file "test/test-1307-anno-tei.xml"))
+  ;; Create Hiccup for testing
+  (->> (parse (clojure.java.io/file "test/test-1307-anno-tei.xml"))
+       (clojure.pprint/pprint)
+       (with-out-str)
+       (spit "test/test-1307-anno-tei.edn"))
   #_.)
