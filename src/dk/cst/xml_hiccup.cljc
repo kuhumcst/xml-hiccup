@@ -121,7 +121,8 @@
     Comment
     nil
 
-    :else node))
+    ;; default case
+    node))
 
 (defn parse
   "Convert `xml` into a tree of Hiccup data."
